@@ -42,6 +42,7 @@ class JournalRecordControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+
     @Autowired
     JournalRecordService journalRecordService;
 
