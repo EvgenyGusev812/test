@@ -25,6 +25,7 @@ import spbpu.trkpo.library.service.JournalRecordService;
 import spbpu.trkpo.library.utils.TestUtils;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -70,7 +71,7 @@ class JournalRecordControllerTest {
     BookRepository bookRepository;
 
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         Client client = TestUtils.createClientEntity();
         client.setJournalRecords(null);
@@ -83,20 +84,32 @@ class JournalRecordControllerTest {
         bookType = bookTypeService.getById(bookTypeId);
 
         Book book = TestUtils.createBookEntity();
+        book.setTypeId(null);
+        book.setJournalRecords(null);
         Long bookId = bookService.saveBook(book);
         book = bookService.getById(bookId);
         book.setTypeId(bookTypeId);
 
-        bookType.setBooks(Set.of(book));
+        Set<Book> set = new HashSet<>();
+        set.add(book);
+        bookType.setBooks(set);
         bookTypeService.saveBookType(bookType);
 
         JournalRecord journalRecord = TestUtils.createJournalRecordEntity();
         journalRecord.setClientId(clientId);
         journalRecord.setBookId(bookId);
-        journalRecordService.saveJournalRecord(journalRecord);
+        Long journalRecordId = journalRecordService.saveJournalRecord(journalRecord);
+        journalRecord = journalRecordService.getById(journalRecordId);
 
-        client.setJournalRecords(Set.of(journalRecord));
+        Set<JournalRecord> set2 = new HashSet<>();
+        set2.add(journalRecord);
+        client.setJournalRecords(set2);
         clientService.saveClient(client);
+
+        Set<JournalRecord> set3 = new HashSet<>();
+        set3.add(journalRecord);
+        book.setJournalRecords(set3);
+        bookService.saveBook(book);
     }
 
 

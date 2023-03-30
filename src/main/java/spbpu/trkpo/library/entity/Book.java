@@ -26,7 +26,7 @@ public class Book {
     @Column(name = "cnt")
     private Long cnt;
 
-    @Column(name = "typeId", nullable = false)
+    @Column(name = "typeId")
     private Long typeId;
 
     @OneToMany(targetEntity = JournalRecord.class, cascade = CascadeType.ALL, orphanRemoval = true)

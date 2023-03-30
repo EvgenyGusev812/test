@@ -38,6 +38,7 @@ public class BookServiceTest  {
     @Mock
     ClientRepository clientRepository;
 
+
     @Test
     void getAllSuccess() {
         Book book = createBookEntity();
@@ -78,12 +79,6 @@ public class BookServiceTest  {
         Assertions.assertThrows(DataErrorException.class, () -> bookService.saveBook(book));
     }
 
-    @Test
-    void saveBookEmptyType() {
-        Book book = createBookEntity();
-        book.setTypeId(null);
-        Assertions.assertThrows(DataErrorException.class, () -> bookService.saveBook(book));
-    }
 
     @Test
     void getByIdSuccess() {

@@ -69,7 +69,7 @@ public class BookService {
         if (book == null) {
             throw new DataErrorException();
         }
-        if (book.getTypeId() == null || StringUtils.isEmpty(book.getName())) {
+        if (StringUtils.isEmpty(book.getName())) {
             throw new DataErrorException();
         }
     }
