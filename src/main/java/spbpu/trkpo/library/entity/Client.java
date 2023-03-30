@@ -35,7 +35,7 @@ public class Client {
     @Column(name = "passportNum", length = 6)
     private String passportNum;
 
-    @OneToMany(targetEntity = JournalRecord.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = JournalRecord.class, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "clientId", referencedColumnName = "id")
     private Set<JournalRecord> journalRecords;
 

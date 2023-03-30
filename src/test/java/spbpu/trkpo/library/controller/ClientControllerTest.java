@@ -2,6 +2,7 @@ package spbpu.trkpo.library.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,11 +14,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import spbpu.trkpo.library.entity.Client;
+import spbpu.trkpo.library.entity.JournalRecord;;
 import spbpu.trkpo.library.service.ClientService;
+import spbpu.trkpo.library.service.JournalRecordService;
 import spbpu.trkpo.library.utils.TestUtils;
 
 
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,9 +39,11 @@ class ClientControllerTest  {
     @Autowired
     ObjectMapper objectMapper;
 
-
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    JournalRecordService journalRecordService;
 
     @Test
     void getClientById() throws Exception {
@@ -51,6 +57,9 @@ class ClientControllerTest  {
     @Test
     void getAllClients() throws Exception {
         Client client = TestUtils.createClientEntity();
+        JournalRecord journalRecord = TestUtils.createJournalRecordEntity();
+        journalRecordService.saveJournalRecord(journalRecord);
+        client.setJournalRecords(Set.of(journalRecord));
         clientService.saveClient(client);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/clients"))
                 .andExpect(status().isOk());
@@ -70,6 +79,9 @@ class ClientControllerTest  {
     @Test
     void getClientByFio() throws Exception {
         Client client = TestUtils.createClientEntity();
+        JournalRecord journalRecord = TestUtils.createJournalRecordEntity();
+        journalRecordService.saveJournalRecord(journalRecord);
+        client.setJournalRecords(Set.of(journalRecord));
         clientService.saveClient(client);
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.put("name", List.of(client.getFirstName()));

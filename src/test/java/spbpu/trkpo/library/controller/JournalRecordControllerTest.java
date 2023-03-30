@@ -98,11 +98,14 @@ class JournalRecordControllerTest {
 
     @Test
     void getJournalRecordById() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/" + -1))
+                .andExpect(status().is(404));
         JournalRecord journalRecord = journalRecordService.getAll().get(0);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/" + journalRecord.getId()))
                 .andExpect(jsonPath("$.id").value(journalRecord.getId()))
                 .andExpect(status().isOk());
     }
+
 
     @Test
     void getAllJournalRecords() throws Exception {
