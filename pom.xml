@@ -58,7 +58,7 @@
         <repository>
             <id>releases</id>
             <name>Internal repo</name>
-            <url>http://domain:port/content/repositories/releases</url>
+            <url>http://domain:8000/content/repositories/releases</url>
         </repository>
     </distributionManagement>
 
