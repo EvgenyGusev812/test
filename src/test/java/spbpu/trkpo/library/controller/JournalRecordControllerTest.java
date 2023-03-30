@@ -25,6 +25,8 @@ import spbpu.trkpo.library.service.JournalRecordService;
 import spbpu.trkpo.library.utils.TestUtils;
 
 
+import java.util.Set;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -71,16 +73,30 @@ class JournalRecordControllerTest {
     @BeforeAll
     void setUp() {
         Client client = TestUtils.createClientEntity();
-        clientService.saveClient(client);
+        client.setJournalRecords(null);
+        Long clientId = clientService.saveClient(client);
+        client = clientService.getById(clientId);
 
         BookType bookType = TestUtils.createBookTypeEntity();
-        bookTypeService.saveBookType(bookType);
+        bookType.setBooks(null);
+        Long bookTypeId = bookTypeService.saveBookType(bookType);
+        bookType = bookTypeService.getById(bookTypeId);
 
         Book book = TestUtils.createBookEntity();
-        bookService.saveBook(book);
+        Long bookId = bookService.saveBook(book);
+        book = bookService.getById(bookId);
+        book.setTypeId(bookTypeId);
+
+        bookType.setBooks(Set.of(book));
+        bookTypeService.saveBookType(bookType);
 
         JournalRecord journalRecord = TestUtils.createJournalRecordEntity();
+        journalRecord.setClientId(clientId);
+        journalRecord.setBookId(bookId);
         journalRecordService.saveJournalRecord(journalRecord);
+
+        client.setJournalRecords(Set.of(journalRecord));
+        clientService.saveClient(client);
     }
 
 
