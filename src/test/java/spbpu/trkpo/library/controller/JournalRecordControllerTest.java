@@ -68,65 +68,65 @@ class JournalRecordControllerTest {
     BookRepository bookRepository;
 
 
-//    @BeforeAll
-//    void setUp() {
-//        Client client = TestUtils.createClientEntity();
-//        clientService.saveClient(client);
-//
-//        BookType bookType = TestUtils.createBookTypeEntity();
-//        bookTypeService.saveBookType(bookType);
-//
-//        Book book = TestUtils.createBookEntity();
-//        bookService.saveBook(book);
-//
-//        JournalRecord journalRecord = TestUtils.createJournalRecordEntity();
-//        journalRecordService.saveJournalRecord(journalRecord);
-//    }
-//
-//
-//    @Test
-//    void getJournalRecordByClientAndBookType() throws Exception {
-//        JournalRecord journalRecord = journalRecordService.getAll().get(0);
-//        Book book = bookService.getById(journalRecord.getBookId());
-//        BookType bookType = bookTypeService.getById(book.getTypeId());
-//        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/by-client-and-type/" + journalRecord.getClientId())
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(bookType)))
-//                .andExpect(jsonPath("$.*", hasSize(1)))
-//                .andExpect(status().isOk());
-//    }
-//
-//    @Test
-//    void getJournalRecordById() throws Exception {
-//        JournalRecord journalRecord = journalRecordService.getAll().get(0);
-//        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/" + journalRecord.getId()))
-//                .andExpect(jsonPath("$.id").value(journalRecord.getId()))
-//                .andExpect(status().isOk());
-//    }
-//
-//    @Test
-//    void getAllJournalRecords() throws Exception {
-//        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/"))
-//                .andExpect(jsonPath("$.*", hasSize(1)))
-//                .andExpect(status().isOk());
-//    }
-//
-//    @Test
-//    void saveJournalRecord() throws Exception {
-//        JournalRecord journalRecord = journalRecordService.getAll().get(0);
-//        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/journal-records/save")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(journalRecord)))
-//                .andExpect(status().isOk());
-//    }
-//
-//    @Test
-//    void deleteJournalRecord() throws Exception {
-//        JournalRecord journalRecord = journalRecordService.getAll().get(0);
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/journal-records/delete")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(journalRecord)))
-//                .andExpect(status().isOk());
-//    }
+    @BeforeAll
+    void setUp() {
+        Client client = TestUtils.createClientEntity();
+        clientService.saveClient(client);
+
+        BookType bookType = TestUtils.createBookTypeEntity();
+        bookTypeService.saveBookType(bookType);
+
+        Book book = TestUtils.createBookEntity();
+        bookService.saveBook(book);
+
+        JournalRecord journalRecord = TestUtils.createJournalRecordEntity();
+        journalRecordService.saveJournalRecord(journalRecord);
+    }
+
+
+    @Test
+    void getJournalRecordByClientAndBookType() throws Exception {
+        JournalRecord journalRecord = journalRecordService.getAll().get(0);
+        Book book = bookService.getById(journalRecord.getBookId());
+        BookType bookType = bookTypeService.getById(book.getTypeId());
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/by-client-and-type/" + journalRecord.getClientId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(bookType)))
+                .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getJournalRecordById() throws Exception {
+        JournalRecord journalRecord = journalRecordService.getAll().get(0);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/" + journalRecord.getId()))
+                .andExpect(jsonPath("$.id").value(journalRecord.getId()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getAllJournalRecords() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/journal-records/"))
+                .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void saveJournalRecord() throws Exception {
+        JournalRecord journalRecord = journalRecordService.getAll().get(0);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/journal-records/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(journalRecord)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteJournalRecord() throws Exception {
+        JournalRecord journalRecord = journalRecordService.getAll().get(0);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/journal-records/delete")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(journalRecord)))
+                .andExpect(status().isOk());
+    }
 
 }
