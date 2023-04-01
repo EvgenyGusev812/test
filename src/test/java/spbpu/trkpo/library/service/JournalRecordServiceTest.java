@@ -164,6 +164,12 @@ class JournalRecordServiceTest  {
     }
 
     @Test
+    void getByIdException() {
+        Mockito.when(journalRecordRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+        Assertions.assertThrows(JournalNotFoundException.class, () -> journalRecordService.getById(1L));
+    }
+
+    @Test
     void getJournalRecrodsByBook() {
         JournalRecord journalRecord = createJournalRecordEntity();
         List<JournalRecord> journalRecords = List.of(journalRecord);
@@ -186,11 +192,6 @@ class JournalRecordServiceTest  {
         Assertions.assertEquals(journalRecord, result);
     }
 
-    @Test
-    void getByIdException() {
-        Mockito.when(journalRecordRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
-        Assertions.assertThrows(JournalNotFoundException.class, () -> journalRecordService.getById(1L));
-    }
 
     @Test
     void deleteJournalRecord() {
@@ -202,6 +203,12 @@ class JournalRecordServiceTest  {
     @Test
     void deleteJournalRecordException() {
         Assertions.assertThrows(JournalNotFoundException.class, () -> journalRecordService.delete(null));
+    }
+
+    @Test
+    void getByEmptyIdException() {
+        Mockito.when(journalRecordRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+        Assertions.assertThrows(JournalNotFoundException.class, () -> journalRecordService.getById(1L));
     }
 
 }

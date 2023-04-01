@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.util.Assert;
 import spbpu.trkpo.library.entity.Client;
 import spbpu.trkpo.library.exception.ClientNotFoundException;
 import spbpu.trkpo.library.exception.DataErrorException;
@@ -135,6 +136,24 @@ class ClientServiceTest  {
     void getByIdException() {
         Mockito.when(repository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
         Assertions.assertThrows(ClientNotFoundException.class, () -> clientService.getById(1L));
+    }
+
+    @Test
+    void getByPassportNumAndPassportSeriaEmptyPassportInfo() {
+        Assertions.assertThrows(ClientNotFoundException.class, () -> clientService.getByPassportNumAndPassportSeria("", ""));
+    }
+
+    @Test
+    void getByPassportNumAndPassportSeriaSuccess() {
+        Client client = createClientEntity();
+        Mockito.when(repository.findByPassportNumAndPassportSeria(Mockito.anyString(), Mockito.anyString())).thenReturn(Optional.of(client));
+        Client result = clientService.getByPassportNumAndPassportSeria(client.getPassportNum(), client.getPassportSeria());
+        Assertions.assertEquals(client, result);
+    }
+
+    @Test
+    void getByPassportNumAndPassportSeriaNotFound() {
+        Assertions.assertThrows(ClientNotFoundException.class, () -> clientService.getByPassportNumAndPassportSeria("34", "45"));
     }
 
 }

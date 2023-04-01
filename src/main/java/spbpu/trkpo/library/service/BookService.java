@@ -65,6 +65,7 @@ public class BookService {
         return books.stream().toList();
     }
 
+
     private void beforeSave(Book book) {
         if (book == null) {
             throw new DataErrorException();

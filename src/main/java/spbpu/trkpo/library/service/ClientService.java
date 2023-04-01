@@ -1,5 +1,6 @@
 package spbpu.trkpo.library.service;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -46,6 +47,13 @@ public class ClientService {
             throw new ClientNotFoundException();
         }
         clientRepository.delete(client);
+    }
+
+    public Client getByPassportNumAndPassportSeria(String passportNum, String passportSeria) {
+        if (StringUtils.isEmpty(passportNum) || StringUtils.isEmpty(passportSeria)) {
+            throw new ClientNotFoundException();
+        }
+        return clientRepository.findByPassportNumAndPassportSeria(passportNum, passportSeria).orElseThrow(ClientNotFoundException::new);
     }
 
 

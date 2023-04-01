@@ -153,6 +153,12 @@ public class BookServiceTest  {
         Assertions.assertThrows(BookNotFoundException.class, () -> bookService.getAllClientBooks(1L));
     }
 
-
+    @Test
+    void getBookByNumbName() {
+        Book book = createBookEntity();
+        Mockito.when(bookRepository.findByName(Mockito.anyString())).thenReturn(book);
+        Book result = bookService.getByName("123");
+        Assertions.assertEquals(book, result);
+    }
 
 }
